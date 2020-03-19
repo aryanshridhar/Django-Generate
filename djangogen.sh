@@ -3,6 +3,7 @@ django-admin startproject $word_1
 cd $word_1/
 destination='django.contrib.staticfiles'
 for i in ${@:2};do 
+    temp=${i,,}
     echo -e 'Generating boiler for '$i'\n'
     python manage.py startapp $i
     cd $i/
@@ -16,7 +17,7 @@ for i in ${@:2};do
     echo 'Building serializers.py ...'
     echo 'from rest_framework import serializers' > serializers.py
     cd ../$word_1
-    sed -i "/${destination}/a\\\t'$i.apps.${i^}Config'," settings.py
+    sed -i "/${destination}/a\\\t'$i.apps.${temp^}Config'," settings.py
     echo -e '\n'
     cd ..
 done 
